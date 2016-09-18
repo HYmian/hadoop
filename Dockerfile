@@ -5,9 +5,9 @@ MAINTAINER mian <gopher.mian@outlook.com>
 WORKDIR /root
 
 # install openssh-server, openjdk and wget
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk curl
+RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk curl && rm -rf /var/lib/apt/lists/*
 
-# install hadoop 2.7.2
+# install hadoop 2.7.3
 RUN curl -O http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
     tar -xzvf hadoop-2.7.3.tar.gz && \
     mv hadoop-2.7.3 /usr/local/hadoop && \
@@ -20,16 +20,15 @@ ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin
 
 # ssh without key
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
-    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-RUN sed -i "s/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g" /etc/ssh/ssh_config
+    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && \
+    sed -i "s/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g" /etc/ssh/ssh_config
 
 RUN mkdir -p ~/hdfs/namenode && \ 
     mkdir -p ~/hdfs/datanode && \
     mkdir $HADOOP_HOME/logs
 
-COPY config/* /tmp/
-ADD server /bin/
-ADD agent /bin/
+ADD config/* /tmp/
+ADD tool/* /bin/
 
 RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/hadoop-env.sh /usr/local/hadoop/etc/hadoop/hadoop-env.sh && \
