@@ -8,7 +8,7 @@ WORKDIR /root
 RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk curl
 
 # install hadoop 2.7.2
-RUN curl -O https://github.com/kiwenlau/compile-hadoop/releases/download/2.7.3/hadoop-2.7.3.tar.gz && \
+RUN curl -O http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
     tar -xzvf hadoop-2.7.3.tar.gz && \
     mv hadoop-2.7.3 /usr/local/hadoop && \
     rm hadoop-2.7.3.tar.gz
