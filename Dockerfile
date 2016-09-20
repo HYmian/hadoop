@@ -1,11 +1,11 @@
-FROM ubuntu:16.04
+FROM openjdk:8
 
 MAINTAINER mian <gopher.mian@outlook.com>
 
 WORKDIR /root
 
 # install openssh-server, openjdk and wget
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y openssh-server curl && rm -rf /var/lib/apt/lists/*
 
 # install hadoop 2.7.3
 RUN curl -O http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
@@ -13,10 +13,14 @@ RUN curl -O http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.
     mv hadoop-2.7.3 /usr/local/hadoop && \
     rm hadoop-2.7.3.tar.gz
 
+RUN curl -O https://mirrors.tuna.tsinghua.edu.cn/apache/hbase/1.2.3/hbase-1.2.3-bin.tar.gz && \
+    tar -xzvf hbase-1.2.3-bin.tar.gz && \
+    mv hbase-1.2.3 /usr/local/hbase && \
+    rm hbase-1.2.3-bin.tar.gz
+
 # set environment variable
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV HADOOP_HOME=/usr/local/hadoop
-ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin
+ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin:/usr/local/hbase/bin
 
 # ssh without key
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
