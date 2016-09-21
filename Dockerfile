@@ -31,7 +31,7 @@ RUN mkdir -p ~/hdfs/namenode && \
     mkdir -p ~/hdfs/datanode && \
     mkdir $HADOOP_HOME/logs
 
-ADD config/* /tmp/
+ADD config/hdfs config/hbase /tmp/
 ADD tool/* /bin/
 
 RUN mv /tmp/hdfs/ssh_config ~/.ssh/config && \
