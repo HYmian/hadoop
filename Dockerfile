@@ -42,7 +42,7 @@ RUN mv /tmp/hdfs/ssh_config ~/.ssh/config && \
     mv /tmp/hdfs/yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml && \
     mv /tmp/hdfs/slaves $HADOOP_HOME/etc/hadoop/slaves && \
     mv /tmp/hdfs/start-hadoop.sh ~/start-hadoop.sh && \
-    mv /tmp/hdfs/run-wordcount.sh ~/run-wordcount.sh
+    mv /tmp/hdfs/run-wordcount.sh ~/run-wordcount.sh && \
     mv /tmp/hbase/* /usr/local/hbase/conf/
 
 RUN chmod +x ~/start-hadoop.sh && \
