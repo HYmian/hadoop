@@ -27,7 +27,7 @@
   </property>
   <property>
     <name>hbase.master.info.bindAddress</name>
-    <value>10.42.120.97</value>
+    <value>hadoop-master</value>
   </property>
   <property>
     <name>hbase.zookeeper.quorum</name>
