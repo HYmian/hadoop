@@ -16,7 +16,7 @@ resourcemanager1:
       - zookeeper/zoo3:zk3
     command: bash -c "service ssh start; yarn resourcemanager"
 resourcemanagerconf1:
-    image: ymian/hadoop:2.7.3-conf
+    image: ymian/hadoop:hadoop-conf
     labels:
       io.rancher.container.start_once: 'true'
 resourcemanager2:
@@ -37,7 +37,7 @@ resourcemanager2:
       - "8089:8088"
     command: bash -c "service ssh start; yarn resourcemanager"
 resourcemanagerconf2:
-    image: ymian/hadoop:2.7.3-conf
+    image: ymian/hadoop:hadoop-conf
     labels:
       io.rancher.container.start_once: 'true'
 nodemanager:
@@ -53,6 +53,6 @@ nodemanager:
       - nodemanagerconf
     command: yarn nodemanager
 nodemanagerconf:
-    image: ymian/hadoop:2.7.3-conf
+    image: ymian/hadoop:hadoop-conf
     labels:
       io.rancher.container.start_once: 'true'

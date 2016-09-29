@@ -18,9 +18,11 @@ hmaster1:
       - zookeeper/zoo3:zk3
       - hadoop/namenode1:namenode1
       - hadoop/namenode2:namenode2
-    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
+    stdin_open: true
+    tty: true
+    command: bash -c "service ssh start; bash"
 hmasterconf1:
-    image: ymian/hadoop:hbase-1.2.3-conf
+    image: ymian/hadoop:hbase-conf
     labels:
       io.rancher.container.start_once: 'true'
 hmaster2:
@@ -43,9 +45,11 @@ hmaster2:
       - hadoop/namenode2:namenode2
     ports:
       - "16011:16010"
-    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
+    command: bash -c "service ssh start; bash"
+    stdin_open: true
+    tty: true
 hmasterconf2:
-    image: ymian/hadoop:hbase-1.2.3-conf
+    image: ymian/hadoop:hbase-conf
     labels:
       io.rancher.container.start_once: 'true'
 regionserver:
@@ -67,8 +71,10 @@ regionserver:
       - zookeeper/zoo3:zk3
     volumes_from:
       - regionserverconf
-    command: bash /tool/entrypoint.sh
+    command: bash
+    stdin_open: true
+    tty: true
 regionserverconf:
-    image: ymian/hadoop:hbase-1.2.3-conf
+    image: ymian/hadoop:hbase-conf
     labels:
       io.rancher.container.start_once: 'true'
