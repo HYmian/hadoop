@@ -64,4 +64,12 @@
         <name>yarn.resourcemanager.zk-address</name>
         <value>zk1:2181,zk2:2181,zk3:2181</value>
     </property>
+    <property>
+        <name>yarn.resourcemanager.recovery.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.store.class</name>
+        <value>org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore</value>
+    </property>
 </configuration>
