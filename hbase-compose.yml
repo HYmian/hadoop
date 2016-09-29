@@ -1,0 +1,71 @@
+hmaster1:
+    image: ymian/hadoop:hbase-1.2.3
+    labels:
+      - "io.rancher.container.hostname_override=container_name"
+      - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
+      - "io.rancher.scheduler.global=true"
+      - "io.rancher.sidekicks=hmasterconf1"
+    environment:
+      - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
+    ports:
+      - "16010:16010"
+    volumes_from:
+      - hmasterconf1
+    links:
+      - zookeeper/zoo1:zk1
+      - zookeeper/zoo2:zk2
+      - zookeeper/zoo3:zk3
+      - hadoop/namenode1:namenode1
+      - hadoop/namenode2:namenode2
+    command: bash -c "service ssh start; hbase master start"
+hmasterconf1:
+    image: ymian/hadoop:hbase-1.2.3-conf
+    labels:
+      io.rancher.container.start_once: 'true'
+hmaster2:
+    image: ymian/hadoop:hbase-1.2.3
+    labels:
+      - "io.rancher.container.hostname_override=container_name"
+      - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
+      - "io.rancher.scheduler.global=true"
+      - "io.rancher.sidekicks=hmasterconf2"
+    environment:
+      - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
+    volumes_from:
+      - hmasterconf2
+    links:
+      - zookeeper/zoo1:zk1
+      - zookeeper/zoo2:zk2
+      - zookeeper/zoo3:zk3
+      - hadoop/namenode1:namenode1
+      - hadoop/namenode2:namenode2
+    ports:
+      - "16011:16010"
+    command: bash -c "service ssh start; hbase master start"
+hmasterconf2:
+    image: ymian/hadoop:hbase-1.2.3-conf
+    labels:
+      io.rancher.container.start_once: 'true'
+regionserver:
+    image: ymian/hadoop:hbase-1.2.3
+    labels:
+      - "io.rancher.container.hostname_override=container_name"
+      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
+      - "io.rancher.sidekicks=regionserverconf"
+    environment:
+      - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
+    links:
+      - hmaster1
+      - hmaster2
+      - hadoop/namenode1:namenode1
+      - hadoop/namenode2:namenode2
+      - zookeeper/zoo1:zk1
+      - zookeeper/zoo2:zk2
+      - zookeeper/zoo3:zk3
+    volumes_from:
+      - regionserverconf
+    command: hbase regionserver start
+regionserverconf:
+    image: ymian/hadoop:hbase-1.2.3-conf
+    labels:
+      io.rancher.container.start_once: 'true'
