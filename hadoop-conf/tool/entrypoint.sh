@@ -28,7 +28,7 @@ elif [ "$HADOOP_ROLE" == "HMASTER" ]; then
   cp /etc/hosts /etc/hosts.old
   sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
   hbase master start
-if [ "$HADOOP_ROLE" == "HREGIONSERVER" ]; then
+elif [ "$HADOOP_ROLE" == "HREGIONSERVER" ]; then
   cp /etc/hosts /etc/hosts.old
   sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
   hbase regionserver start
