@@ -18,7 +18,7 @@ hmaster1:
       - zookeeper/zoo3:zk3
       - hadoop/namenode1:namenode1
       - hadoop/namenode2:namenode2
-    command: bash -c "service ssh start; hbase master start"
+    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
 hmasterconf1:
     image: ymian/hadoop:hbase-1.2.3-conf
     labels:
@@ -43,7 +43,7 @@ hmaster2:
       - hadoop/namenode2:namenode2
     ports:
       - "16011:16010"
-    command: bash -c "service ssh start; hbase master start"
+    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
 hmasterconf2:
     image: ymian/hadoop:hbase-1.2.3-conf
     labels:
@@ -67,7 +67,7 @@ regionserver:
       - zookeeper/zoo3:zk3
     volumes_from:
       - regionserverconf
-    command: hbase regionserver start
+    command: bash /tool/entrypoint.sh
 regionserverconf:
     image: ymian/hadoop:hbase-1.2.3-conf
     labels:
