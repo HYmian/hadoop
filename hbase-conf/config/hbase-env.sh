@@ -27,7 +27,7 @@
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # Extra Java CLASSPATH elements.  Optional.
-# export HBASE_CLASSPATH=
+export HBASE_CLASSPATH=$HADOOP_CONF_DIR
 
 # The maximum amount of heap to use. Default is left to JVM default.
 # export HBASE_HEAPSIZE=1G
