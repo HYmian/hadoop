@@ -19,7 +19,7 @@ namenode1:
       - journalnode1
       - journalnode2
       - journalnode3
-    command: bash -c "service ssh start; /hadoop/entrypoint.sh"
+    command: bash -c "service ssh start; /tool/entrypoint.sh"
 nameconf1:
     image: ymian/hadoop:2.7.3-conf
     labels:
@@ -46,7 +46,7 @@ namenode2:
     ports:
       - "50071:50070"
       - "8089:8088"
-    command: bash -c "service ssh start; /hadoop/entrypoint.sh"
+    command: bash -c "service ssh start; /tool/entrypoint.sh"
 nameconf2:
     image: ymian/hadoop:2.7.3-conf
     labels:

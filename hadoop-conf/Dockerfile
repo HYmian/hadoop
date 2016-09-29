@@ -5,5 +5,5 @@ MAINTAINER mian <gopher.mian@outlook.com>
 ADD config /usr/local/hadoop/etc/hadoop/
 VOLUME /usr/local/hadoop/etc/hadoop/
 
-ADD bin /hadoop/
-VOLUME /hadoop
+ADD tool /tool/
+VOLUME /tool
