@@ -9,7 +9,59 @@
         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
     </property>
     <property>
-        <name>yarn.resourcemanager.hostname</name>
-        <value>hadoop-master</value>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>8192</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.vmem-pmem-ratio</name>
+        <value>10</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.vmem-check-enabled</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.pmem-check-enabled</name>
+        <value>false</value>
+    </property>
+        <property>
+        <name>yarn.resourcemanager.ha.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.cluster-id</name>
+        <value>mycluster</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.ha.rm-ids</name>
+        <value>rm1,rm2</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.hostname.rm1</name>
+        <value>resourcemanager1</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.hostname.rm2</name>
+        <value>resourcemanager2</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address.rm1</name>
+        <value>resourcemanager1:8032</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address.rm2</name>
+        <value>resourcemanager2:8032</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.address.rm1</name>
+        <value>resourcemanager1:8088</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.address.rm2</name>
+        <value>resourcemanager2:8088</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.zk-address</name>
+        <value>zk1:2181,zk2:2181,zk3:2181</value>
     </property>
 </configuration>

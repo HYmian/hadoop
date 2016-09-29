@@ -10,7 +10,6 @@ namenode1:
     ports:
       - "50070:50070"
       - "8088:8088"
-      - "16010:16010"
     volumes_from:
       - nameconf1
     links:
@@ -20,9 +19,9 @@ namenode1:
       - journalnode1
       - journalnode2
       - journalnode3
-    command: bash -c "rm -rf /root/hdfs/namenode; service ssh start; /hadoop/entrypoint.sh"
+    command: bash -c "service ssh start; /hadoop/entrypoint.sh"
 nameconf1:
-    image: ymian/hadoop-conf
+    image: ymian/hadoop:conf
     labels:
       io.rancher.container.start_once: 'true'
 namenode2:
@@ -47,10 +46,9 @@ namenode2:
     ports:
       - "50071:50070"
       - "8089:8088"
-      - "16011:16010"
-    command: bash -c "rm -rf /root/hdfs/namenode; service ssh start; /hadoop/entrypoint.sh"
+    command: bash -c "service ssh start; /hadoop/entrypoint.sh"
 nameconf2:
-    image: ymian/hadoop-conf
+    image: ymian/hadoop:conf
     labels:
       io.rancher.container.start_once: 'true'
 datanode:
@@ -66,7 +64,7 @@ datanode:
       - dataconf
     command: hdfs datanode
 dataconf:
-    image: ymian/hadoop-conf
+    image: ymian/hadoop:conf
     labels:
       io.rancher.container.start_once: 'true'
 journalnode1:
@@ -79,7 +77,7 @@ journalnode1:
     volumes_from:
       - journalconf1
 journalconf1:
-    image: ymian/hadoop-conf
+    image: ymian/hadoop:conf
     labels:
       io.rancher.container.start_once: 'true'
 journalnode2:
@@ -92,7 +90,7 @@ journalnode2:
     volumes_from:
       - journalconf2
 journalconf2:
-    image: ymian/hadoop-conf
+    image: ymian/hadoop:conf
     labels:
       io.rancher.container.start_once: 'true'
 journalnode3:
@@ -105,6 +103,6 @@ journalnode3:
     volumes_from:
       - journalconf3
 journalconf3:
-    image: ymian/hadoop-conf
+    image: ymian/hadoop:conf
     labels:
       io.rancher.container.start_once: 'true'
