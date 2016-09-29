@@ -27,14 +27,14 @@ elif [ "$HADOOP_ROLE" == "NAMENODE2" ] ; then
 elif [ "$HADOOP_ROLE" == "HMASTER" ]; then
   if [ ! -f /usr/local/hbase/runonce.lock ]; then
     cp /etc/hosts /etc/hosts.old
-    sed -e \"s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g\" /etc/hosts.old > /etc/hosts
+    sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
   fi
   touch /usr/local/hbase/runonce.lock
   hbase hmaster start
 elif [ "$HADOOP_ROLE" == "HREGIONSERVER" ]; then
   if [ ! -f /usr/local/hbase/runonce.lock ]; then
     cp /etc/hosts /etc/hosts.old
-    sed -e \"s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g\" /etc/hosts.old > /etc/hosts
+    sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
   fi
   touch /usr/local/hbase/runonce.lock
   hbase regionserver start
