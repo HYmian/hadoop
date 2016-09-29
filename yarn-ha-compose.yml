@@ -47,10 +47,10 @@ nodemanager:
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
       - "io.rancher.sidekicks=nodemanagerconf"
     links:
-      - namenode1
-      - namenode2
+      - resourcemanager1
+      - resourcemanager2
     volumes_from:
-      - dataconf
+      - nodemanagerconf
     command: yarn nodemanager
 nodemanagerconf:
     image: ymian/hadoop:2.7.3-conf
