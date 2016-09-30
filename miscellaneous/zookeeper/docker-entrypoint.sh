@@ -4,7 +4,7 @@ set -e
 
 # Allow the container to be started with `--user`
 if [ "$1" = 'zkServer.sh' -a "$(id -u)" = '0' ]; then
-    exec su-exec "$ZOO_USER" "$0" "$@"
+    exec su "$ZOO_USER" "$0" "$@"
 fi
 
 # Generate the config only if it doesn't exist
