@@ -20,7 +20,7 @@ hmaster1:
       - hadoop/namenode2:namenode2
     stdin_open: true
     tty: true
-    command: bash -c "service ssh start; bash"
+    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
 hmasterconf1:
     image: ymian/hadoop:hbase-conf
     labels:
@@ -45,7 +45,7 @@ hmaster2:
       - hadoop/namenode2:namenode2
     ports:
       - "16011:16010"
-    command: bash -c "service ssh start; bash"
+    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
     stdin_open: true
     tty: true
 hmasterconf2:
@@ -71,7 +71,7 @@ regionserver:
       - zookeeper/zoo3:zk3
     volumes_from:
       - regionserverconf
-    command: bash
+    command: bash /tool/entrypoint.sh
     stdin_open: true
     tty: true
 regionserverconf:
