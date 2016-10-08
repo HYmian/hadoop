@@ -1,4 +1,4 @@
-FROM ymian/hadoop:2.7.3-conf
+FROM ymian/hadoop:hadoop-conf
 
 MAINTAINER mian <gopher.mian@outlook.com>
 
