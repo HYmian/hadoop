@@ -7,6 +7,7 @@ if [ "$HADOOP_ROLE" == "NAMENODE1" ] ; then
           echo "FORMATTING NAMENODE"
           hdfs namenode -format || { echo 'FORMATTING FAILED' ; exit 1; }
         fi
+    hdfs zkfc -formatZK
     touch /data/hdfs/runonce.lock
     fi
     export HADOOP_ROLE="NAMENODE1"
@@ -33,5 +34,6 @@ elif [ "$HADOOP_ROLE" == "HREGIONSERVER" ]; then
     cp /etc/hosts /etc/hosts.old
     sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
     /tool/agent -s hmaster1:34616 -conf /tool/agent-conf.yml
+    /tool/agent -s hmaster2:34616 -conf /tool/agent-conf.yml
     hbase regionserver start
 fi
