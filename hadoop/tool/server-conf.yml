@@ -1,8 +1,0 @@
-register:
-    - regular: "{{ .Host }}"
-      file: "/usr/local/hadoop/etc/hadoop/slaves"
-    - regular: "{{ .Host }}"
-      file: "/usr/local/hbase/conf/regionservers"
-    - regular: "{{ .IP }} {{ .Host }}"
-      file: "/etc/hosts"
-bootCommand: "start-dfs.sh; start-yarn.sh; start-hbase.sh"
