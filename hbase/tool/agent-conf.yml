@@ -1,3 +1,0 @@
-register:
-    - regular: "{{ .IP }} {{ .Host }}"
-      file: "/etc/hosts"
