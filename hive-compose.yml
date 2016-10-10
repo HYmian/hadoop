@@ -1,0 +1,22 @@
+hive:
+    image: ymian/hadoop:hive-2.1
+    labels:
+      - "io.rancher.container.hostname_override=container_name"
+      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
+      - "io.rancher.sidekicks=hive-conf"
+    environment:
+      - "HADOOP_HOME=/usr/local/hadoop"
+    volumes_from:
+      - hive-conf
+    links:
+      - hadoop/namenode1:namenode1
+      - hadoop/namenode2:namenode2
+      - hadoop/resourcemanager2:resourcemanager2
+      - hadoop/resourcemanager1:resourcemanager1
+    stdin_open: true
+    tty: true
+    command: bash
+hive-conf:
+    image: ymian/hadoop:hive-conf
+    labels:
+      io.rancher.container.start_once: 'true'
