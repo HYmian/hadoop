@@ -7,7 +7,7 @@ if [ "$HADOOP_ROLE" == "NAMENODE1" ] ; then
           echo "FORMATTING NAMENODE"
           hdfs namenode -format || { echo 'FORMATTING FAILED' ; exit 1; }
         fi
-    hdfs zkfc -formatZK
+    hdfs zkfc -formatZK -force
     touch /data/hdfs/runonce.lock
     fi
     export HADOOP_ROLE="NAMENODE1"
