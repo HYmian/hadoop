@@ -15,7 +15,7 @@ RUN curl -O http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.
 
 # set environment variable
 ENV HADOOP_HOME=/usr/local/hadoop
-ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin:/usr/local/hbase/bin
+ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin
 
 # ssh without key
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
