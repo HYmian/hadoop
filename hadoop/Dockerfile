@@ -5,7 +5,7 @@ MAINTAINER mian <gopher.mian@outlook.com>
 WORKDIR /root
 
 # install openssh-server
-RUN apt-get update && apt-get install -y openssh-server && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y supervisor openssh-server && rm -rf /var/lib/apt/lists/*
 
 # install hadoop 2.7.3
 RUN curl -O http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
