@@ -9,6 +9,10 @@
         <value>zk1:2181,zk2:2181,zk3:2181</value>
     </property>
     <property>
+        <name>ha.zookeeper.session-timeout.ms</name>
+        <value>12000</value>
+    </property>
+    <property>
         <name>hadoop.proxyuser.root.hosts</name>
         <value>*</value>
     </property>
