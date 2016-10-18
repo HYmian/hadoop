@@ -41,4 +41,4 @@ elif [ "$HADOOP_ROLE" == "HIVE" ]; then
         schematool -dbType derby -initSchema
         touch $HIVE_HOME/runonce.lock
     fi
-if
+fi
