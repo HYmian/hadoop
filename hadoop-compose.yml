@@ -52,7 +52,6 @@ nameconf2:
 datanode:
     image: ymian/hadoop:2.7.3
     labels:
-      - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
       - "io.rancher.sidekicks=dataconf, nodemanager"
     links:
@@ -119,7 +118,7 @@ resourcemanager1:
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
       - zookeeper/zoo3:zk3
-    command: bash -c "service ssh start; yarn resourcemanager"
+    command: bash -c "service ssh start; yarn-daemon.sh start resourcemanager; /tool/server -n 10 -conf /tool/server-conf.yml"
 resourcemanagerconf1:
     image: ymian/hadoop:hadoop-conf
     labels:
@@ -139,7 +138,7 @@ resourcemanager2:
       - zookeeper/zoo3:zk3
     ports:
       - "8089:8088"
-    command: bash -c "service ssh start; yarn resourcemanager"
+    command: bash -c "service ssh start; yarn-daemon.sh start resourcemanager; /tool/server -n 10 -conf /tool/server-conf.yml"
 resourcemanagerconf2:
     image: ymian/hadoop:hadoop-conf
     labels:
@@ -147,7 +146,6 @@ resourcemanagerconf2:
 nodemanager:
     image: ymian/hadoop:2.7.3
     labels:
-      - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
     links:
       - resourcemanager1
@@ -155,4 +153,4 @@ nodemanager:
     volumes_from:
       - dataconf
     net: "container:datanode"
-    command: yarn nodemanager
+    command: bash -c "/tool/agent -s resourcemanager1:34616 -conf /tool/agent-conf.yml; /tool/agent -s resourcemanager2:34616 -conf /tool/agent-conf.yml; yarn nodemanager"

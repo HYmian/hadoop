@@ -1,0 +1,32 @@
+kafka-1:
+    image: confluentinc/cp-kafka:3.0.1
+    links:
+        - zookeeper/zoo1:zoo1
+        - zookeeper/zoo2:zoo2
+        - zookeeper/zoo3:zoo3
+    environment:
+        KAFKA_BROKER_ID: 1
+        KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+
+kafka-2:
+    image: confluentinc/cp-kafka:3.0.1
+    links:
+        - zookeeper/zoo1:zoo1
+        - zookeeper/zoo2:zoo2
+        - zookeeper/zoo3:zoo3
+    environment:
+        KAFKA_BROKER_ID: 2
+        KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+
+kafka-3:
+    image: confluentinc/cp-kafka:3.0.1
+    links:
+        - zookeeper/zoo1:zoo1
+        - zookeeper/zoo2:zoo2
+        - zookeeper/zoo3:zoo3
+    environment:
+        KAFKA_BROKER_ID: 3
+        KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
