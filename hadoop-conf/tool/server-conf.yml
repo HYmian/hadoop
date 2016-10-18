@@ -1,4 +1,3 @@
 register:
     - regular: "{{ .IP }} {{ .Host }}"
       file: "/etc/hosts"
-bootCommand: "start-dfs.sh; start-yarn.sh; start-hbase.sh"
