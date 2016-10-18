@@ -5,7 +5,7 @@ MAINTAINER mian <gopher.mian@outlook.com>
 WORKDIR /root
 
 # install openssh-server
-RUN apt-get update && apt-get install -y openssh-server && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y supervisor openssh-server && rm -rf /var/lib/apt/lists/*
 
 # install hbase 1.2.3
 RUN curl -O https://mirrors.tuna.tsinghua.edu.cn/apache/hbase/1.2.3/hbase-1.2.3-bin.tar.gz && \
