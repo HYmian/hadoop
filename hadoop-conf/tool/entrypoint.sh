@@ -25,7 +25,7 @@ elif [ "$HADOOP_ROLE" == "NAMENODE2" ] ; then
     export HADOOP_ROLE="NAMENODE"
     hadoop-daemon.sh start zkfc
     hdfs namenode
-elif [ "$HADOOP_ROLE" == "NODEMANAGER"] ; then
+elif [ "$HADOOP_ROLE" == "NODEMANAGER" ] ; then
     cp /tool/supervisord/$HADOOP_ROLE.conf /etc/supervisord.conf
     supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "HMASTER" ]; then

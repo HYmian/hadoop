@@ -145,6 +145,8 @@ resourcemanagerconf2:
       io.rancher.container.start_once: 'true'
 nodemanager:
     image: ymian/hadoop:2.7.3
+    environment:
+      - "HADOOP_ROLE=NODEMANAGER"
     labels:
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
     links:
@@ -153,4 +155,4 @@ nodemanager:
     volumes_from:
       - dataconf
     net: "container:datanode"
-    command: bash -c "yarn-daemon.sh start nodemanager; /tool/agent -s \"resourcemanager1:34616;resourcemanager2:34616\" -conf /tool/agent-conf.yml"
+    command: bash /tool/entrypoint.sh
