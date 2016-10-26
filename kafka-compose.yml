@@ -1,5 +1,6 @@
-kafka-1:
+kafka1:
     image: confluentinc/cp-kafka:3.0.1
+    hostname: kafka1
     links:
         - zookeeper/zoo1:zoo1
         - zookeeper/zoo2:zoo2
@@ -7,10 +8,16 @@ kafka-1:
     environment:
         KAFKA_BROKER_ID: 1
         KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
-        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-
-kafka-2:
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+    extra_hosts:
+        - "kafka1:10.42.250.1"
+        - "kafka2:10.42.250.2"
+        - "kafka3:10.42.250.3"
+    labels:
+        - "io.rancher.container.requested_ip=10.42.250.1"
+kafka2:
     image: confluentinc/cp-kafka:3.0.1
+    hostname: kafka2
     links:
         - zookeeper/zoo1:zoo1
         - zookeeper/zoo2:zoo2
@@ -18,10 +25,16 @@ kafka-2:
     environment:
         KAFKA_BROKER_ID: 2
         KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
-        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-
-kafka-3:
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+    extra_hosts:
+        - "kafka1:10.42.250.1"
+        - "kafka2:10.42.250.2"
+        - "kafka3:10.42.250.3"
+    labels:
+        - "io.rancher.container.requested_ip=10.42.250.2"
+kafka3:
     image: confluentinc/cp-kafka:3.0.1
+    hostname: kafka3
     links:
         - zookeeper/zoo1:zoo1
         - zookeeper/zoo2:zoo2
@@ -29,4 +42,10 @@ kafka-3:
     environment:
         KAFKA_BROKER_ID: 3
         KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
-        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+    extra_hosts:
+        - "kafka1:10.42.250.1"
+        - "kafka2:10.42.250.2"
+        - "kafka3:10.42.250.3"
+    labels:
+        - "io.rancher.container.requested_ip=10.42.250.3"

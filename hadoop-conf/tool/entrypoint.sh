@@ -10,7 +10,7 @@ if [ "$HADOOP_ROLE" == "NAMENODE1" ] ; then
     hdfs zkfc -formatZK -force
     touch /data/hdfs/runonce.lock
     fi
-    export HADOOP_ROLE="NAMENODE1"
+    export HADOOP_ROLE="NAMENODE"
     hadoop-daemon.sh start zkfc
     hdfs namenode
 elif [ "$HADOOP_ROLE" == "NAMENODE2" ] ; then
@@ -25,6 +25,9 @@ elif [ "$HADOOP_ROLE" == "NAMENODE2" ] ; then
     export HADOOP_ROLE="NAMENODE"
     hadoop-daemon.sh start zkfc
     hdfs namenode
+elif [ "$HADOOP_ROLE" == "NODEMANAGER"] ; then
+    cp /tool/supervisord/$HADOOP_ROLE.conf /etc/supervisord.conf
+    supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "HMASTER" ]; then
     cp /etc/hosts /etc/hosts.old
     sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts

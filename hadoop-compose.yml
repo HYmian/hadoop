@@ -138,7 +138,7 @@ resourcemanager2:
       - zookeeper/zoo3:zk3
     ports:
       - "8089:8088"
-    command: bash -c "service ssh start; yarn-daemon.sh start resourcemanager; /tool/server -n 10 -conf /tool/server-conf.yml"
+    command: bash -c "service ssh start; yarn-daemon.sh start resourcemanager; /tool/server -conf /tool/server-conf.yml"
 resourcemanagerconf2:
     image: ymian/hadoop:hadoop-conf
     labels:
@@ -153,4 +153,4 @@ nodemanager:
     volumes_from:
       - dataconf
     net: "container:datanode"
-    command: bash -c "/tool/agent -s resourcemanager1:34616 -conf /tool/agent-conf.yml; /tool/agent -s resourcemanager2:34616 -conf /tool/agent-conf.yml; yarn nodemanager"
+    command: bash -c "yarn-daemon.sh start nodemanager; /tool/agent -s \"resourcemanager1:34616;resourcemanager2:34616\" -conf /tool/agent-conf.yml"
