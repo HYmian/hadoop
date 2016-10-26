@@ -26,7 +26,7 @@ elif [ "$HADOOP_ROLE" == "NAMENODE2" ] ; then
     hadoop-daemon.sh start zkfc
     hdfs namenode
 elif [ "$HADOOP_ROLE" == "NODEMANAGER" ] ; then
-    cp /tool/supervisord/$HADOOP_ROLE.conf /etc/supervisord.conf
+    cp /supervisord/$HADOOP_ROLE.conf /etc/supervisord.conf
     supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "HMASTER" ]; then
     cp /etc/hosts /etc/hosts.old

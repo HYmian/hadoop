@@ -7,3 +7,6 @@ VOLUME /usr/local/hadoop/etc/hadoop/
 
 ADD tool /tool/
 VOLUME /tool
+
+ADD supervisord /supervisord
+VOLUME /supervisord
