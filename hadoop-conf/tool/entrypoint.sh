@@ -39,4 +39,9 @@ elif [ "$HADOOP_ROLE" == "HREGIONSERVER" ]; then
     /tool/agent -s hmaster1:34616 -conf /tool/agent-conf.yml
     /tool/agent -s hmaster2:34616 -conf /tool/agent-conf.yml
     hbase regionserver start
+elif [ "$HADOOP_ROLE" == "HIVE" ]; then
+    if [ ! -f $HIVE_HOME/runonce.lock ]; then
+        schematool -dbType derby -initSchema
+        touch $HIVE_HOME/runonce.lock
+    fi
 fi
