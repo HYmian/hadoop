@@ -28,23 +28,23 @@
     </property>
     <property>
         <name>dfs.namenode.rpc-address.mycluster.nn1</name>
-        <value>namenode1:8020</value>
+        <value>NameNode1:8020</value>
     </property>
     <property>
         <name>dfs.namenode.rpc-address.mycluster.nn2</name>
-        <value>namenode2:8020</value>
+        <value>NameNode2:8020</value>
     </property>
     <property>
         <name>dfs.namenode.http-address.mycluster.nn1</name>
-        <value>namenode1:50070</value>
+        <value>NameNode1:50070</value>
     </property>
     <property>
         <name>dfs.namenode.http-address.mycluster.nn2</name>
-        <value>namenode2:50070</value>
+        <value>NameNode2:50070</value>
     </property>
     <property>
         <name>dfs.namenode.shared.edits.dir</name>
-        <value>qjournal://journalnode1:8485;journalnode2:8485;journalnode3:8485/mycluster</value>
+        <value>qjournal://JournalNode1:8485;JournalNode2:8485;JournalNode3:8485/mycluster</value>
     </property>
     <property>
         <name>dfs.client.failover.proxy.provider.mycluster</name>

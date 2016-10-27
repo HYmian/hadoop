@@ -1,137 +1,137 @@
-namenode1:
+JournalNode1:
+    image: ymian/hadoop:2.7.3
+    labels: 
+      - "io.rancher.container.hostname_override=container_name"
+      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
+      - "io.rancher.sidekicks=JournalNode1-conf"
+    command: hdfs journalnode
+    volumes_from:
+      - JournalNode1-conf
+JournalNode1-conf:
+    image: ymian/hadoop:hadoop-conf
+    labels:
+      - "io.rancher.container.start_once=true"
+JournalNode2:
+    image: ymian/hadoop:2.7.3
+    labels: 
+      - "io.rancher.container.hostname_override=container_name"
+      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
+      - "io.rancher.sidekicks=JournalNode2-conf"
+    command: hdfs journalnode
+    volumes_from:
+      - JournalNode2-conf
+JournalNode2-conf:
+    image: ymian/hadoop:hadoop-conf
+    labels:
+      - "io.rancher.container.start_once=true"
+JournalNode:
+    image: ymian/hadoop:2.7.3
+    labels: 
+      - "io.rancher.container.hostname_override=container_name"
+      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
+      - "io.rancher.sidekicks=JournalNode3-conf"
+    command: hdfs journalnode
+    volumes_from:
+      - JournalNode3-conf
+JournalNode3-conf:
+    image: ymian/hadoop:hadoop-conf
+    labels:
+      - "io.rancher.container.start_once=true"
+
+NameNode1:
     image: ymian/hadoop:2.7.3
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
-      - "io.rancher.scheduler.global=true"
-      - "io.rancher.sidekicks=nameconf1"
+      - "io.rancher.sidekicks=NameNode1-conf"
     environment:
       - "HADOOP_ROLE=NAMENODE1"
     ports:
       - "50070:50070"
     volumes_from:
-      - nameconf1
+      - NameNode1-conf
     links:
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
       - zookeeper/zoo3:zk3
-      - journalnode1
-      - journalnode2
-      - journalnode3
+      - JournalNode1
+      - JournalNode2
+      - JournalNode3
     command: bash -c "service ssh start; bash /tool/entrypoint.sh"
-nameconf1:
+NameNode1-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
-      io.rancher.container.start_once: 'true'
-namenode2:
+      - "io.rancher.container.start_once=true"
+NameNode2:
     image: ymian/hadoop:2.7.3
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
-      - "io.rancher.scheduler.global=true"
-      - "io.rancher.sidekicks=nameconf2"
+      - "io.rancher.sidekicks=NameNode2-conf"
     environment:
       - "HADOOP_ROLE=NAMENODE2"
     volumes_from:
-      - nameconf2
+      - NameNode2-conf
     links:
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
       - zookeeper/zoo3:zk3
-      - journalnode1
-      - journalnode2
-      - journalnode3
-      - namenode1
+      - JournalNode1
+      - JournalNode2
+      - JournalNode3
+      - NameNode1
     ports:
       - "50071:50070"
     command: bash -c "service ssh start; bash /tool/entrypoint.sh"
-nameconf2:
+NameNode2-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
-      io.rancher.container.start_once: 'true'
-datanode:
+      - "io.rancher.container.start_once=true"
+
+DataNode:
     image: ymian/hadoop:2.7.3
     labels:
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
-      - "io.rancher.sidekicks=dataconf, nodemanager"
+      - "io.rancher.sidekicks=DataNode-conf, NodeManager"
     links:
-      - namenode1
-      - namenode2
+      - NameNode1
+      - NameNode2
     volumes_from:
-      - dataconf
+      - DataNode-conf
     command: hdfs datanode
-dataconf:
+DataNode-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
-      io.rancher.container.start_once: 'true'
-journalnode1:
-    image: ymian/hadoop:2.7.3
-    labels: 
-      - "io.rancher.container.hostname_override=container_name"
-      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
-      - "io.rancher.sidekicks=journalconf1"
-    command: hdfs journalnode
-    volumes_from:
-      - journalconf1
-journalconf1:
-    image: ymian/hadoop:hadoop-conf
-    labels:
-      io.rancher.container.start_once: 'true'
-journalnode2:
-    image: ymian/hadoop:2.7.3
-    labels: 
-      - "io.rancher.container.hostname_override=container_name"
-      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
-      - "io.rancher.sidekicks=journalconf2"
-    command: hdfs journalnode
-    volumes_from:
-      - journalconf2
-journalconf2:
-    image: ymian/hadoop:hadoop-conf
-    labels:
-      io.rancher.container.start_once: 'true'
-journalnode3:
-    image: ymian/hadoop:2.7.3
-    labels: 
-      - "io.rancher.container.hostname_override=container_name"
-      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
-      - "io.rancher.sidekicks=journalconf3"
-    command: hdfs journalnode
-    volumes_from:
-      - journalconf3
-journalconf3:
-    image: ymian/hadoop:hadoop-conf
-    labels:
-      io.rancher.container.start_once: 'true'
-resourcemanager1:
+      - "io.rancher.container.start_once=true"
+
+ResourceManager1:
     image: ymian/hadoop:2.7.3
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
       - "io.rancher.scheduler.global=true"
-      - "io.rancher.sidekicks=resourcemanagerconf1"
+      - "io.rancher.sidekicks=ResourceManager1-conf"
     ports:
       - "8088:8088"
     volumes_from:
-      - resourcemanagerconf1
+      - ResourceManager1-conf
     links:
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
       - zookeeper/zoo3:zk3
     command: bash -c "service ssh start; yarn-daemon.sh start resourcemanager; /tool/server -n 10 -conf /tool/server-conf.yml"
-resourcemanagerconf1:
+ResourceManager1-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
-      io.rancher.container.start_once: 'true'
-resourcemanager2:
+      - "io.rancher.container.start_once=true"
+ResourceManager2:
     image: ymian/hadoop:2.7.3
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
-      - "io.rancher.scheduler.global=true"
-      - "io.rancher.sidekicks=resourcemanagerconf2"
+      - "io.rancher.sidekicks=ResourceManager2-conf"
     volumes_from:
-      - resourcemanagerconf2
+      - ResourceManager2-conf
     links:
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
@@ -139,20 +139,21 @@ resourcemanager2:
     ports:
       - "8089:8088"
     command: bash -c "service ssh start; yarn-daemon.sh start resourcemanager; /tool/server -conf /tool/server-conf.yml"
-resourcemanagerconf2:
+ResourceManager2-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
-      io.rancher.container.start_once: 'true'
-nodemanager:
+      - "io.rancher.container.start_once=true"
+
+NodeManager:
     image: ymian/hadoop:2.7.3
     environment:
       - "HADOOP_ROLE=NODEMANAGER"
     labels:
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
     links:
-      - resourcemanager1
-      - resourcemanager2
+      - ResourceManager1
+      - ResourceManager2
     volumes_from:
-      - dataconf
-    net: "container:datanode"
+      - DataNode-conf
+    net: "container:DataNode"
     command: bash /tool/entrypoint.sh
