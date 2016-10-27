@@ -54,7 +54,7 @@ RegionServer:
       - "io.rancher.sidekicks=RegionServer-conf"
     environment:
       - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
-      - "HADOOP_ROLE=HRegionServer"
+      - "HADOOP_ROLE=HREGIONSERVER"
     links:
       - HMaster1
       - HMaster2
