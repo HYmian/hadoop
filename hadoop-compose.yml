@@ -57,7 +57,7 @@ NameNode1:
       - JournalNode1
       - JournalNode2
       - JournalNode3
-    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
+    command: bash /tool/entrypoint.sh
 NameNode1-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
@@ -82,7 +82,7 @@ NameNode2:
       - NameNode1
     ports:
       - "50071:50070"
-    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
+    command: bash /tool/entrypoint.sh
 NameNode2-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
@@ -93,6 +93,7 @@ DataNode:
     labels:
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
       - "io.rancher.sidekicks=DataNode-conf, NodeManager"
+      - "io.rancher.container.hostname_override=container_name"
     links:
       - NameNode1
       - NameNode2
@@ -106,6 +107,8 @@ DataNode-conf:
 
 ResourceManager1:
     image: ymian/hadoop:2.7.3
+    environment:
+      - "HADOOP_ROLE=RESOURCEMANAGER"
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
@@ -119,13 +122,15 @@ ResourceManager1:
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
       - zookeeper/zoo3:zk3
-    command: bash -c "service ssh start; yarn-daemon.sh start resourcemanager; /tool/server -n 10 -conf /tool/server-conf.yml"
+    command: bash /tool/entrypoint.sh
 ResourceManager1-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
       - "io.rancher.container.start_once=true"
 ResourceManager2:
     image: ymian/hadoop:2.7.3
+    environment:
+      - "HADOOP_ROLE=RESOURCEMANAGER"
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
@@ -138,7 +143,7 @@ ResourceManager2:
       - zookeeper/zoo3:zk3
     ports:
       - "8089:8088"
-    command: bash -c "service ssh start; yarn-daemon.sh start resourcemanager; /tool/server -conf /tool/server-conf.yml"
+    command: bash /tool/entrypoint.sh
 ResourceManager2-conf:
     image: ymian/hadoop:hadoop-conf
     labels:

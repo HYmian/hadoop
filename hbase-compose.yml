@@ -1,80 +1,72 @@
-hmaster1:
+HMaster1:
     image: ymian/hadoop:hbase-1.2.3
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
-      - "io.rancher.scheduler.global=true"
-      - "io.rancher.sidekicks=hmasterconf1"
+      - "io.rancher.sidekicks=HMaster1-conf"
     environment:
       - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
       - "HADOOP_ROLE=HMASTER"
     ports:
       - "16010:16010"
     volumes_from:
-      - hmasterconf1
+      - HMaster1-conf
     links:
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
       - zookeeper/zoo3:zk3
-      - hadoop/namenode1:namenode1
-      - hadoop/namenode2:namenode2
-    stdin_open: true
-    tty: true
-    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
-hmasterconf1:
+      - hadoop/NameNode1:NameNode1
+      - hadoop/NameNode2:NameNode2
+    command: bash /tool/entrypoint.sh
+HMaster1-conf:
     image: ymian/hadoop:hbase-conf
     labels:
-      io.rancher.container.start_once: 'true'
-hmaster2:
+      - "io.rancher.container.start_once=true"
+HMaster2:
     image: ymian/hadoop:hbase-1.2.3
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
-      - "io.rancher.scheduler.global=true"
-      - "io.rancher.sidekicks=hmasterconf2"
+      - "io.rancher.sidekicks=HMaster2-conf"
     environment:
       - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
       - "HADOOP_ROLE=HMASTER"
     volumes_from:
-      - hmasterconf2
+      - HMaster2-conf
     links:
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
       - zookeeper/zoo3:zk3
-      - hadoop/namenode1:namenode1
-      - hadoop/namenode2:namenode2
+      - hadoop/NameNode1:NameNode1
+      - hadoop/NameNode2:NameNode2
     ports:
       - "16011:16010"
-    command: bash -c "service ssh start; bash /tool/entrypoint.sh"
-    stdin_open: true
-    tty: true
-hmasterconf2:
+    command: bash /tool/entrypoint.sh
+HMaster2-conf:
     image: ymian/hadoop:hbase-conf
     labels:
-      io.rancher.container.start_once: 'true'
-regionserver:
+      - "io.rancher.container.start_once=true"
+RegionServer:
     image: ymian/hadoop:hbase-1.2.3
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
-      - "io.rancher.sidekicks=regionserverconf"
+      - "io.rancher.sidekicks=RegionServer-conf"
     environment:
       - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
-      - "HADOOP_ROLE=HREGIONSERVER"
+      - "HADOOP_ROLE=HRegionServer"
     links:
-      - hmaster1
-      - hmaster2
-      - hadoop/namenode1:namenode1
-      - hadoop/namenode2:namenode2
+      - HMaster1
+      - HMaster2
+      - hadoop/NameNode1:NameNode1
+      - hadoop/NameNode2:NameNode2
       - zookeeper/zoo1:zk1
       - zookeeper/zoo2:zk2
       - zookeeper/zoo3:zk3
     volumes_from:
-      - regionserverconf
+      - RegionServer-conf
     command: bash /tool/entrypoint.sh
-    stdin_open: true
-    tty: true
-regionserverconf:
+RegionServer-conf:
     image: ymian/hadoop:hbase-conf
     labels:
-      io.rancher.container.start_once: 'true'
+      - "io.rancher.container.start_once=true"

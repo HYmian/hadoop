@@ -56,19 +56,22 @@ elif [ "$HADOOP_ROLE" == "NAMENODE2" ]; then
     export HADOOP_ROLE="NAMENODE"
     cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
     supervisord -n -c /etc/supervisord.conf
+elif [ "$HADOOP_ROLE" == "RESOURCEMANAGER" ] ; then
+    cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
+    supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "NODEMANAGER" ] ; then
     cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
     supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "HMASTER" ]; then
     cp /etc/hosts /etc/hosts.old
     sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
-    hbase-daemon.sh start master
-    /tool/server -n 10 -conf /tool/server-conf.yml
+    cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
+    supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "HREGIONSERVER" ]; then
     cp /etc/hosts /etc/hosts.old
     sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
-    /tool/agent -s hmaster1:34616 -conf /tool/agent-conf.yml
-    /tool/agent -s hmaster2:34616 -conf /tool/agent-conf.yml
+    /tool/agent -s HMASTER1:34616 -mode client -conf /tool/agent-conf.yml
+    /tool/agent -s HMASTER2:34616 -mode client -conf /tool/agent-conf.yml
     hbase regionserver start
 elif [ "$HADOOP_ROLE" == "HIVE" ]; then
     if [ ! -f $HIVE_HOME/runonce.lock ]; then
