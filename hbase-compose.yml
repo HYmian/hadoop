@@ -49,7 +49,7 @@ HMaster2-conf:
 RegionServer:
     image: ymian/hadoop:hbase-1.2.3
     labels:
-      - "io.rancher.container.hostname_override=container_name"
+#      - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
       - "io.rancher.sidekicks=RegionServer-conf"
     environment:

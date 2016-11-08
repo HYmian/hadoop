@@ -93,7 +93,7 @@ DataNode:
     labels:
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
       - "io.rancher.sidekicks=DataNode-conf, NodeManager"
-      - "io.rancher.container.hostname_override=container_name"
+#      - "io.rancher.container.hostname_override=container_name"
     links:
       - NameNode1
       - NameNode2
@@ -112,10 +112,10 @@ ResourceManager1:
     labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopMaster=true"
-      - "io.rancher.scheduler.global=true"
       - "io.rancher.sidekicks=ResourceManager1-conf"
     ports:
       - "8088:8088"
+      - "19888:19888"
     volumes_from:
       - ResourceManager1-conf
     links:
@@ -143,8 +143,23 @@ ResourceManager2:
       - zookeeper/zoo3:zk3
     ports:
       - "8089:8088"
+      - "19889:19888"
     command: bash /tool/entrypoint.sh
 ResourceManager2-conf:
+    image: ymian/hadoop:hadoop-conf
+    labels:
+      - "io.rancher.container.start_once=true"
+
+JobHistory:
+    image: ymian/hadoop:2.7.3
+    labels:
+      - "io.rancher.container.hostname_override=container_name"
+      - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
+      - "io.rancher.sidekicks=JobHistory-conf"
+    volumes_from:
+      - JobHistory-conf
+    command: mapred jobhistory
+JobHistory-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
       - "io.rancher.container.start_once=true"
