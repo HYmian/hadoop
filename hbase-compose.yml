@@ -17,6 +17,9 @@ HMaster1:
       - zookeeper/zoo3:zk3
       - hadoop/NameNode1:NameNode1
       - hadoop/NameNode2:NameNode2
+      - hadoop/ResourceManager1:ResourceManager1
+      - hadoop/ResourceManager2:ResourceManager2
+      - hadoop/JobHistory:JobHistory
     command: bash /tool/entrypoint.sh
 HMaster1-conf:
     image: ymian/hadoop:hbase-conf
@@ -39,6 +42,9 @@ HMaster2:
       - zookeeper/zoo3:zk3
       - hadoop/NameNode1:NameNode1
       - hadoop/NameNode2:NameNode2
+      - hadoop/ResourceManager1:ResourceManager1
+      - hadoop/ResourceManager2:ResourceManager2
+      - hadoop/JobHistory:JobHistory
     ports:
       - "16011:16010"
     command: bash /tool/entrypoint.sh

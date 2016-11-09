@@ -158,7 +158,7 @@ JobHistory:
       - "io.rancher.sidekicks=JobHistory-conf"
     volumes_from:
       - JobHistory-conf
-    command: mapred jobhistory
+    command: mapred historyserver
 JobHistory-conf:
     image: ymian/hadoop:hadoop-conf
     labels:
