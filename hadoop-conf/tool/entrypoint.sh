@@ -60,10 +60,6 @@ elif [ "$HADOOP_ROLE" == "RESOURCEMANAGER" ] ; then
     cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
     supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "NODEMANAGER" ] ; then
-    STACK=`curl -s http://rancher-metadata/latest/self/stack/name`
-    SERVICE=`curl -s http://rancher-metadata/latest/self/service/name`
-    INDEX=`curl -s http://rancher-metadata/latest/self/container/service_index`
-
     cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
     supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "HMASTER" ]; then
