@@ -47,10 +47,3 @@ JobHistory-conf:
 NodeManager:
   scale: 1
   retain_ip: true
-
-
-
-
-
-
-

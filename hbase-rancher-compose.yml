@@ -1,0 +1,15 @@
+HMaster1:
+  scale: 1
+  retain_ip: true
+HMaster1-conf:
+  scale: 1
+HMaster2:
+  scale: 1
+  retain_ip: true
+HMaster2-conf:
+  scale: 1
+RegionServer:
+  scale: 1
+  retain_ip: true
+RegionServer-conf:
+  scale: 1
