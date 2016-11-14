@@ -70,12 +70,14 @@ elif [ "$HADOOP_ROLE" == "HMASTER" ]; then
 elif [ "$HADOOP_ROLE" == "HREGIONSERVER" ]; then
     cp /etc/hosts /etc/hosts.old
     sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
-    /tool/agent -s HMASTER1:34616 -mode client -conf /tool/agent-conf.yml
-    /tool/agent -s HMASTER2:34616 -mode client -conf /tool/agent-conf.yml
-    hbase regionserver start
+    cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
+    supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "HIVE" ]; then
     if [ ! -f $HIVE_HOME/runonce.lock ]; then
+        hdfs dfs -mkdir -p /tmp/hive
+        hdfs dfs -chmod 733 /tmp/hive
         schematool -dbType derby -initSchema
+        hiveserver2
         touch $HIVE_HOME/runonce.lock
     fi
 fi
