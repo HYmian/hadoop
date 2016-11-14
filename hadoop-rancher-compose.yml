@@ -1,0 +1,56 @@
+JournalNode1:
+  scale: 1
+  retain_ip: true
+JournalNode1-conf:
+  scale: 1
+JournalNode2:
+  scale: 1
+  retain_ip: true
+JournalNode2-conf:
+  scale: 1
+JournalNode3:
+  scale: 1
+  retain_ip: true
+JournalNode3-conf:
+  scale: 1
+NameNode1:
+  scale: 1
+  retain_ip: true
+NameNode1-conf:
+  scale: 1
+NameNode2:
+  scale: 1
+  retain_ip: true
+NameNode2-conf:
+  scale: 1
+DataNode:
+  scale: 1
+  retain_ip: true
+DataNode-conf:
+  scale: 1
+
+ResourceManager1:
+  scale: 1
+  retain_ip: true
+ResourceManager1-conf:
+  scale: 1
+ResourceManager2:
+  scale: 1
+  retain_ip: true
+ResourceManager2-conf:
+  scale: 1
+JobHistory:
+  scale: 1
+  retain_ip: true
+JobHistory-conf:
+  scale: 1
+NodeManager:
+  scale: 1
+  retain_ip: true
+
+
+
+
+
+
+

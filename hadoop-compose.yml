@@ -97,6 +97,9 @@ DataNode:
     links:
       - NameNode1
       - NameNode2
+      - zookeeper/zoo1:zk1
+      - zookeeper/zoo2:zk2
+      - zookeeper/zoo3:zk3
     volumes_from:
       - DataNode-conf
     command: hdfs datanode
@@ -115,7 +118,6 @@ ResourceManager1:
       - "io.rancher.sidekicks=ResourceManager1-conf"
     ports:
       - "8088:8088"
-      - "19888:19888"
     volumes_from:
       - ResourceManager1-conf
     links:
@@ -143,7 +145,6 @@ ResourceManager2:
       - zookeeper/zoo3:zk3
     ports:
       - "8089:8088"
-      - "19889:19888"
     command: bash /tool/entrypoint.sh
 ResourceManager2-conf:
     image: ymian/hadoop:hadoop-conf
@@ -156,6 +157,8 @@ JobHistory:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
       - "io.rancher.sidekicks=JobHistory-conf"
+    ports:
+      - "19888:19888"
     volumes_from:
       - JobHistory-conf
     command: mapred historyserver
@@ -173,6 +176,8 @@ NodeManager:
     links:
       - ResourceManager1
       - ResourceManager2
+    ports:
+      - "8042:8042"
     volumes_from:
       - DataNode-conf
     net: "container:DataNode"
