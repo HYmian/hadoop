@@ -6,17 +6,16 @@ hive:
       - "io.rancher.sidekicks=hive-conf"
     environment:
       - "HADOOP_HOME=/usr/local/hadoop"
+      - "HADOOP_ROLE=HIVE"
     volumes_from:
       - hive-conf
     links:
-      - hadoop/namenode1:namenode1
-      - hadoop/namenode2:namenode2
-      - hadoop/resourcemanager2:resourcemanager2
-      - hadoop/resourcemanager1:resourcemanager1
-    stdin_open: true
-    tty: true
-    command: bash
+      - hadoop/NameNode1:NameNode1
+      - hadoop/NameNode2:NameNode2
+      - hadoop/ResourceManager1:ResourceManager1
+      - hadoop/ResourceManager2:ResourceManager2
+    command: bash /tool/entrypoint.sh
 hive-conf:
     image: ymian/hadoop:hive-conf
     labels:
-      io.rancher.container.start_once: 'true'
+      - "io.rancher.container.start_once=true"
