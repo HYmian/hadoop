@@ -18,6 +18,7 @@ stderr_logfile=/dev/stderr
 stdout_logfile_maxbytes=0
 stderr_logfile_maxbytes=0
 autostart=true
+startsecs=30
 
 [program:zkfc]
 command=hdfs zkfc
@@ -26,6 +27,7 @@ stderr_logfile=/dev/stderr
 stdout_logfile_maxbytes=0
 stderr_logfile_maxbytes=0
 autostart=true
+startsecs=30
 
 [eventlistener:listener]
 command=python /tool/listener.py
