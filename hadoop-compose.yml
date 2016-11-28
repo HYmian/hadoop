@@ -1,6 +1,6 @@
 JournalNode1:
     image: ymian/hadoop:2.7.3
-    labels: 
+    labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
       - "io.rancher.sidekicks=JournalNode1-conf"
@@ -13,7 +13,7 @@ JournalNode1-conf:
       - "io.rancher.container.start_once=true"
 JournalNode2:
     image: ymian/hadoop:2.7.3
-    labels: 
+    labels:
       - "io.rancher.container.hostname_override=container_name"
       - "io.rancher.scheduler.affinity:host_label=HadoopSlave=true"
       - "io.rancher.sidekicks=JournalNode2-conf"
@@ -159,6 +159,9 @@ JobHistory:
       - "io.rancher.sidekicks=JobHistory-conf"
     ports:
       - "19888:19888"
+    links:
+      - NameNode1
+      - NameNode2
     volumes_from:
       - JobHistory-conf
     command: mapred historyserver

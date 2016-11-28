@@ -60,6 +60,8 @@ elif [ "$HADOOP_ROLE" == "RESOURCEMANAGER" ] ; then
     cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
     supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "NODEMANAGER" ] ; then
+    cp /etc/hosts /etc/hosts.old
+    sed -e "s/.*`hostname`/`curl -s http://rancher-metadata/latest/self/container/ips/0` `hostname`/g" /etc/hosts.old > /etc/hosts
     cp /supervisord/$HADOOP_ROLE /etc/supervisord.conf
     supervisord -n -c /etc/supervisord.conf
 elif [ "$HADOOP_ROLE" == "HMASTER" ]; then
