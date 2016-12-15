@@ -7,6 +7,8 @@ zoo1:
     ZOOKEEPER_INIT_LIMIT: 5
     ZOOKEEPER_SYNC_LIMIT: 2
     ZOOKEEPER_SERVERS: zoo1:22888:23888;zoo2:32888:33888;zoo3:42888:43888
+  labels:
+   - "io.rancher.scheduler.affinity:container_label_ne=io.rancher.stack.name=$${stack_name}"
 zoo2:
   image: confluentinc/cp-zookeeper
   environment:
@@ -16,6 +18,8 @@ zoo2:
     ZOOKEEPER_INIT_LIMIT: 5
     ZOOKEEPER_SYNC_LIMIT: 2
     ZOOKEEPER_SERVERS: zoo1:22888:23888;zoo2:32888:33888;zoo3:42888:43888
+  labels:
+   - "io.rancher.scheduler.affinity:container_label_ne=io.rancher.stack.name=$${stack_name}"
 zoo3:
   image: confluentinc/cp-zookeeper
   environment:
@@ -25,3 +29,5 @@ zoo3:
     ZOOKEEPER_INIT_LIMIT: 5
     ZOOKEEPER_SYNC_LIMIT: 2
     ZOOKEEPER_SERVERS: zoo1:22888:23888;zoo2:32888:33888;zoo3:42888:43888
+  labels:
+   - "io.rancher.scheduler.affinity:container_label_ne=io.rancher.stack.name=$${stack_name}"

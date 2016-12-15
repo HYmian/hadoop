@@ -1,7 +1,7 @@
 kafka1:
     image: confluentinc/cp-kafka:3.0.1
     hostname: kafka1
-    links:
+    external_links:
         - zookeeper/zoo1:zoo1
         - zookeeper/zoo2:zoo2
         - zookeeper/zoo3:zoo3
@@ -15,10 +15,11 @@ kafka1:
         - "kafka3:10.42.250.3"
     labels:
         - "io.rancher.container.requested_ip=10.42.250.1"
+        - "io.rancher.scheduler.affinity:container_label_ne=io.rancher.stack.name=$${stack_name}"
 kafka2:
     image: confluentinc/cp-kafka:3.0.1
     hostname: kafka2
-    links:
+    external_links:
         - zookeeper/zoo1:zoo1
         - zookeeper/zoo2:zoo2
         - zookeeper/zoo3:zoo3
@@ -32,10 +33,11 @@ kafka2:
         - "kafka3:10.42.250.3"
     labels:
         - "io.rancher.container.requested_ip=10.42.250.2"
+        - "io.rancher.scheduler.affinity:container_label_ne=io.rancher.stack.name=$${stack_name}"
 kafka3:
     image: confluentinc/cp-kafka:3.0.1
     hostname: kafka3
-    links:
+    external_links:
         - zookeeper/zoo1:zoo1
         - zookeeper/zoo2:zoo2
         - zookeeper/zoo3:zoo3
@@ -49,3 +51,4 @@ kafka3:
         - "kafka3:10.42.250.3"
     labels:
         - "io.rancher.container.requested_ip=10.42.250.3"
+        - "io.rancher.scheduler.affinity:container_label_ne=io.rancher.stack.name=$${stack_name}"
