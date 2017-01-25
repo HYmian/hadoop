@@ -7,11 +7,11 @@ WORKDIR /root
 # install openssh-server
 RUN apt-get update && apt-get install -y supervisor openssh-server && rm -rf /var/lib/apt/lists/*
 
-# install hbase 1.2.3
-RUN curl -O https://mirrors.tuna.tsinghua.edu.cn/apache/hbase/1.2.3/hbase-1.2.3-bin.tar.gz && \
-    tar -xzvf hbase-1.2.3-bin.tar.gz && \
-    mv hbase-1.2.3 /usr/local/hbase && \
-    rm hbase-1.2.3-bin.tar.gz
+# install hbase 1.2.4
+RUN curl -O https://mirrors.tuna.tsinghua.edu.cn/apache/hbase/1.2.4/hbase-1.2.4-bin.tar.gz && \
+    tar -xzvf hbase-1.2.4-bin.tar.gz && \
+    mv hbase-1.2.4 /usr/local/hbase && \
+    rm hbase-1.2.4-bin.tar.gz
 
 # set environment variable
 ENV HBASE_HOME=/usr/local/hbase
