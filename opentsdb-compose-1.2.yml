@@ -54,7 +54,7 @@ RegionServer:
     image: ymian/hadoop:hbase-1.2.3
     labels:
       - "io.rancher.container.hostname_override=container_name"  
-      - "io.rancher.sidekicks=RegionServer-conf"
+      - "io.rancher.sidekicks=RegionServer-conf, OpenTSDB"
     environment:
       - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
       - "HADOOP_ROLE=HREGIONSERVER"
@@ -74,3 +74,20 @@ RegionServer-conf:
     image: ymian/hadoop:hbase-conf
     labels:
       - "io.rancher.container.start_once=true"
+
+OpenTSDB:
+    image: ymian/opentsdb
+    net: "container:RegionServer"
+    entrypoint:
+      - bash
+    stdin_open: true
+    tty: true
+    environment:
+      - "TSD_CONF_tsd__network__port=4242"
+      - "TSD_CONF_tsd__core__auto_create_metrics=true"
+      - "TSD_CONF_tsd__http__request__enable_chunked=true"
+      - "TSD_CONF_tsd__http__request__max_chunk=33554432"
+      - "TSD_CONF_tsd__storage__fix_duplicates=true"
+      - "TSD_CONF_tsd__storage__hbase__zk_quorum=zk1:2181,zk2:2181,zk3:2181"
+    volumes_from:
+      - RegionServer-conf
