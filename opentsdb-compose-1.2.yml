@@ -52,6 +52,8 @@ HMaster2-conf:
       - "io.rancher.container.start_once=true"
 RegionServer:
     image: ymian/hadoop:hbase-1.2.3
+    ports:
+     - "4242:4242"
     labels:
       - "io.rancher.container.hostname_override=container_name"  
       - "io.rancher.sidekicks=RegionServer-conf, OpenTSDB"
@@ -89,5 +91,9 @@ OpenTSDB:
       - "TSD_CONF_tsd__http__request__max_chunk=33554432"
       - "TSD_CONF_tsd__storage__fix_duplicates=true"
       - "TSD_CONF_tsd__storage__hbase__zk_quorum=zk1:2181,zk2:2181,zk3:2181"
+      - "HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop"
+      - "COMPRESSION=NONE"
     volumes_from:
       - RegionServer-conf
+    labels:
+      - "io.rancher.container.pull_image=always"
