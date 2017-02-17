@@ -19,7 +19,7 @@ HMaster1:
       - hadoop/ResourceManager1:ResourceManager1
       - hadoop/ResourceManager2:ResourceManager2
       - hadoop/JobHistory:JobHistory
-    command: bash /tool/entrypoint.sh
+    command: hbase master start
 HMaster1-conf:
     image: ymian/hadoop:hbase-conf
     labels:
@@ -45,7 +45,7 @@ HMaster2:
       - hadoop/JobHistory:JobHistory
     ports:
       - "16011:16010"
-    command: bash /tool/entrypoint.sh
+    command: hbase master start
 HMaster2-conf:
     image: ymian/hadoop:hbase-conf
     labels:
@@ -69,7 +69,7 @@ RegionServer:
       - zookeeper/zoo3:zk3
     volumes_from:
       - RegionServer-conf
-    command: bash /tool/entrypoint.sh
+    command: hbase regionserver start
 RegionServer-conf:
     image: ymian/hadoop:hbase-conf
     labels:
